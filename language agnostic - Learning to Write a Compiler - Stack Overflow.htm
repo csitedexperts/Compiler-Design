@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://stackoverflow.com/questions/1669/learning-to-write-a-compiler -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>language agnostic - Learning to Write a Compiler - Stack Overflow</title>
+    <link rel="shortcut icon" href="http://cdn.sstatic.net/stackoverflow/img/favicon.ico">
+    <link rel="apple-touch-icon image_src" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="http://stackoverflow.com/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com">
+    <meta name="og:type" content="website">
+    <meta name="og:image" content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=fde65a5a78c6">
+    <meta name="og:title" content="Learning to Write a Compiler">
+    <meta name="og:description" content="Preferred Languages : C/C++, Java, and Ruby
+
+I am looking for some helpful books/tutorials on how to write your own compiler simply for educational purposes. I am most familiar with C/C++, Java, and ">
+    <meta name="og:url" content="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler">
+    <link rel="canonical" href="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/language agnostic - Learning to Write a Compiler - Stack Overflow.htm">
+
+    
+    
+    <script type="text/javascript" async="" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/ados"></script><script async="" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/beacon.js"></script><script type="text/javascript" async="" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/ga.js"></script><script type="text/javascript" async="" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/quant.js"></script><script type="text/javascript" async="" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/ados.js"></script><script type="text/javascript" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/jquery.min.js"></script>
+    <script src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/stub.en.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/all.css">
+    
+    <script type="text/javascript">
+        
+        StackExchange.ready(function () {
+            StackExchange.using("postValidation", function () {
+                StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+            });
+
+            
+            StackExchange.question.init({showAnswerHelp:true,totalCommentCount:2,shownCommentCount:0,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:1669});
+
+            styleCode();
+
+                StackExchange.realtime.subscribeToQuestion('1', '1669');
+            
+                    });
+    </script>
+
+
+    <script type="text/javascript">
+        StackExchange.init({"locale":"en","stackAuthUrl":"https://stackauth.com","serverTime":1386879799,"styleCode":true,"enableUserHovercards":true,"site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","enableSocialMediaInSharePopup":true},"user":{"fkey":"fab44483b3d1ac981121e202673a0baf","isAnonymous":true,"ab":{"anonymoushero":{"v":"2","g":2}}}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"e0bbd4760e83","js/moderator.en.js":"1a411fd265fe","js/full-anon.en.js":"e1c09144fb8a","js/full.en.js":"0051436a8f84","js/wmd.en.js":"bd9234d44a40","js/third-party/jquery.autocomplete.min.js":"e5f01e97f7c3","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"d1d834ef85d2","js/help.en.js":"d3cc74d8a93a","js/tageditor.en.js":"6d51a5f8d7f3","js/tageditornew.en.js":"111b781cf314","js/inline-tag-editing.en.js":"f951bd09dc69","js/revisions.en.js":"33fd38144303","js/review.en.js":"b44cee8b2b0b","js/tagsuggestions.en.js":"e4e7b952fcc7","js/post-validation.en.js":"c275fe37d674","js/explore-qlist.en.js":"73825bd006fc","js/events.en.js":"23bb11cfe220"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+        
+    </script>
+    
+        <script type="text/javascript">
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+<script async="" type="text/javascript" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/full-anon.en.js"></script><script async="" type="text/javascript" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/post-validation.en.js"></script><script type="text/javascript" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/adFeedback.js"></script><link rel="stylesheet" href="http://static.adzerk.net/Extensions/adFeedback.css"><link href="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/sidebar.min.css" type="text/css" rel="stylesheet"></head>
+<body class="question-page new-topbar">
+    <noscript>&lt;div id="noscript-padding"&gt;&lt;/div&gt;</noscript>
+    <div id="notify-container"></div>
+    <div id="overlay-header"></div>
+    <div id="custom-header"></div>
+<div class="topbar">
+    <div class="topbar-wrapper">
+        
+        <div class="js-topbar-dialog-corral">
+
+<div class="topbar-dialog siteSwitcher-dialog dno">
+    <div class="header">
+        <h3><a href="http://stackexchange.com/sites">Explore our sites</a></h3>
+    </div>
+    <div class="modal-content">
+        <ul class="current-site">
+                <li>
+                        <a href="http://stackoverflow.com/" class="current-site-link site-link js-site-link js-gps-track" data-gps-track="site_switcher.click({ item_type:3 })">
+        <div class="site-icon favicon favicon-stackoverflow" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+    <div class="related-links js-related-links">
+            <a href="http://chat.stackoverflow.com/" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+                    <a href="http://blog.stackexchange.com/" data-gps-track="site_switcher.click({ item_type:7 })">blog</a>
+            </div>
+
+                </li>
+                <li class="related-site">
+                        <a href="http://meta.stackoverflow.com/" class="site-link js-site-link js-gps-track" data-gps-track="site.switch({ target_site:4, item_type:3 });site_switcher.click({ item_type:4 })">
+        <div class="site-icon favicon favicon-stackoverflowmeta" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                    
+                </li>
+                            <li class="related-site">
+                    <a class="site-link js-site-link" href="http://careers.stackoverflow.com/" data-gps-track="site_switcher.click({ item_type:9 })">
+                        <div class="site-icon favicon favicon-careers" title="Stack Overflow Careers"></div>
+                        Careers 2.0
+                    </a>
+                </li>
+        </ul>
+        
+
+
+        
+            <div class="child-content"></div>
+
+    </div>
+</div>        </div>
+
+        <div class="network-items">
+            
+            <a href="http://stackexchange.com/" class="topbar-icon icon-site-switcher js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" data-child-content-url="/topbar/site-switcher/site-list" data-on-class="icon-site-switcher-on" title="A list of all 112 Stack Exchange sites">
+                <span class="hidden-text">Stack Exchange</span>
+            </a>
+            
+        </div>
+
+        <div class="topbar-links">
+            
+                <div class="links-container">
+                    <span class="topbar-menu-links">
+                        <a href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f1669%2flearning-to-write-a-compiler" class="login-link">sign up</a>    
+                        <a href="http://stackoverflow.com/users/login?returnurl=%2fquestions%2f1669%2flearning-to-write-a-compiler" class="login-link">log in</a>
+                        <a href="http://stackoverflow.com/tour">tour</a>
+                        <a href="http://stackoverflow.com/help">help</a>
+                            <a href="http://careers.stackoverflow.com/">careers 2.0</a>
+                    </span>
+                </div>
+
+			<div class="search-container">
+                <form id="search" action="http://stackoverflow.com/search" method="get" autocomplete="off">
+                    <input name="q" type="text" placeholder="search" value="" tabindex="1" autocomplete="off" maxlength="240">
+                </form>
+			</div>
+            	
+        </div>      
+    </div> 
+</div>
+<script>
+    StackExchange.ready(function () {
+        //topbar.init();
+        StackExchange.topbar.init();
+    });
+</script>    <div class="container">
+        <div id="header" class="headeranon">
+            <br class="cbt">
+            <div id="hlogo">
+                <a href="http://stackoverflow.com/">
+                    Stack Overflow
+                </a>
+            </div>
+            <div id="hmenus">
+                <div class="nav mainnavs mainnavsanon">
+                    <ul>
+                            <li class="youarehere"><a id="nav-questions" href="http://stackoverflow.com/questions">Questions</a></li>
+                            <li><a id="nav-tags" href="http://stackoverflow.com/tags">Tags</a></li>
+                            <li><a id="nav-tour" href="http://stackoverflow.com/about">Tour</a></li>
+                            <li><a id="nav-users" href="http://stackoverflow.com/users">Users</a></li>
+                    </ul>
+                </div>
+                <div class="nav askquestion">
+                    <ul>
+                        <li>
+                            <a id="nav-askquestion" href="http://stackoverflow.com/questions/ask">Ask Question</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+
+
+
+        <div id="content">
+            
+
+<div itemscope="" itemtype="http://schema.org/Article">
+	<link itemprop="image" href="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon.png">
+			<!--googleoff: all-->
+<div id="herobox-mini">
+    <div id="hero-content">
+        <span id="controls">
+            <a href="http://stackoverflow.com/about" id="tell-me-more" class="button">Take the tour</a>
+            <span id="close"><a title="click to dismiss">×</a></span>
+        </span>
+        <div id="blurb">
+            Stack Overflow is a question and answer site for professional and enthusiast programmers. It's 100% free, no registration required.
+        </div>        
+    </div>
+    <script>
+        $('#tell-me-more').click(function () {
+            var clickSource = $("body").attr("class") + '-mini';
+            if ($("body").hasClass("questions-page")) {
+                clickSource = 'questionpagemini';
+            }
+            if ($("body").hasClass("home-page")) {
+                clickSource = 'homepagemini';
+            }
+
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("aboutpage.click", { aboutclick_location: clickSource } , true);
+            });
+        });
+        $('#herobox-mini #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "close" }, true);
+            });
+            $.cookie("hero", "none", { path: "/" });
+            var $hero = $("#herobox-mini");
+            $hero.slideUp('fast', function () { $hero.remove(); });
+            return false;
+        });
+    </script>
+</div>
+			<!--googleon: all-->
+			<div id="question-header">
+			<h1 itemprop="name"><a href="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/language agnostic - Learning to Write a Compiler - Stack Overflow.htm" class="question-hyperlink">Learning to Write a Compiler</a></h1>
+		</div>
+			<div id="mainbar">
+
+			
+
+<div class="question ice-ice-baby" data-questionid="1669" id="question">
+    
+        <input type="hidden" id="1669-only-allow-inform-moderator-flagging" value="true">
+    <script type="text/javascript">
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk1281273176",4).setZone(43) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow adzerk-vote" id="adzerk1281273176">
+            <iframe id="ados_frame_adzerk1281273176_81042" frameborder="0" scrolling="no" height="90" width="728"></iframe><div class="adzerk-vote-controls" style="display: none;"><div class="adzerk-vote-option adzerk-vote-up"><div class="adzerk-vote-icon"></div></div><div class="adzerk-vote-option adzerk-vote-down"><div class="adzerk-vote-icon"></div></div></div><div class="adzerk-vote-survey" style="display:none;"><form><span>No problem. We won't show you that ad again. Why didn't you like it?</span><ul><li><label><input type="radio" value="12" name="downvoteReason">Uninteresting</label></li><li><label><input type="radio" value="13" name="downvoteReason">Misleading</label></li><li><label><input type="radio" value="14" name="downvoteReason">Offensive</label></li><li><label><input type="radio" value="15" name="downvoteReason">Repetitive</label></li></ul><a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#" class="adzerk-vote-cancel">Oops! I didn't mean to do this.</a></form></div><img height="0px" width="0px" border="0" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/i.gif"></div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1669">
+    <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+    <span class="vote-count-post ">614</span>
+    <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+    
+    <a class="star-off" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#" title="This is a favorite question (click again to undo)">favorite</a>
+    <div class="favoritecount"><b>1274</b></div>   
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="description">
+
+        <p><em>Preferred Languages</em> : C/C++, Java, and Ruby</p>
+
+<p>I am looking for some helpful books/tutorials on how to write your own compiler simply for educational purposes. I am most familiar with C/C++, Java, and Ruby, so I prefer resources that involve one of those three, but any good resource is acceptable.</p>
+
+    </div>
+    <div class="post-taglist">
+        <a href="http://stackoverflow.com/questions/tagged/compiler" class="post-tag" title="show questions tagged &#39;compiler&#39;" rel="tag">compiler</a> <a href="http://stackoverflow.com/questions/tagged/language-agnostic" class="post-tag" title="show questions tagged &#39;language-agnostic&#39;" rel="tag">language-agnostic</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/q/1669" title="short permalink to this question" class="short-link" id="link-post-1669">share</a></div>        
+    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1669/revisions" title="show all edits to this post">edited <span title="2013-04-03 16:49:46Z" class="relativetime">Apr 3 at 16:49</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+    <td class="post-signature">
+        <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1669" href="http://stackoverflow.com/posts/1669/revisions" title="show revision history for this post">
+        18 revs, 9 users 49%<br></a><a href="http://stackoverflow.com/users/340">Anton</a>
+
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1669" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="2" data-addlink-html="comments disabled on deleted / locked posts" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1669" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">show <b>2</b> more comments</a>
+    </td>
+</tr>    
+        </tbody></table>    
+</div>
+<div class="question-status">
+        <h2>                    <b>locked</b> by <a href="http://stackoverflow.com/users/50049/tim-post">Tim Post</a><span class="mod-flair" title="moderator">♦</span> <span title="2012-04-08 16:17:29Z" class="relativetime">Apr 8 '12 at 16:17</span>
+</h2>
+        <p>This question exists because it has historical significance, but <b>it is not considered a good, on-topic question for this site</b>, 
+so please do not use it as evidence that you can ask similar questions here.  This question and its answers are frozen and cannot be changed.
+More info: <a href="http://stackoverflow.com/help">help center</a>.</p>
+    </div>
+
+			<div id="answers">
+
+				<a name="tab-top"></a>
+				<div id="answers-header">
+					<div class="subheader answers-subheader">
+						<h2>
+								38 Answers
+						</h2>
+						<div>
+							<div id="tabs">
+        <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?answertab=active#tab-top" title="Answers with the latest activity first">active</a>
+        <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?answertab=oldest#tab-top" title="Answers in the order they were provided">oldest</a>
+        <a class="youarehere" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?answertab=votes#tab-top" title="Answers with the highest score first">votes</a>
+</div>
+						</div>
+					</div>    
+				</div>    
+
+
+<div class="pager-answers">
+        
+
+
+
+
+ <span class="page-numbers current">1</span>         <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?page=2&tab=votes#tab-top" title="go to page 2"> <span class="page-numbers">2</span> </a> 
+        <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?page=2&tab=votes#tab-top" rel="next" title="go to page 2"> <span class="page-numbers next"> next</span> </a> 
+
+    </div>
+
+  
+<a name="1672"></a>
+<div id="answer-1672" class="answer ice-ice-baby accepted-answer" data-answerid="1672">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1672">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">574</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><h2>Big List of Resources:</h2>
+
+<ul>
+<li><a href="http://www.cs.indiana.edu/~dyb/pubs/nano-jfp.pdf">A Nanopass Framework for Compiler Education</a> ¶</li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/1558603204">Advanced Compiler Design and Implementation</a> $</li>
+<li><a href="http://scheme2006.cs.uchicago.edu/11-ghuloum.pdf">An Incremental Approach to Compiler Construction</a> ¶</li>
+<li><a href="http://javadude.com/articles/antlr3xtut">ANTLR 3.x Video Tutorial</a></li>
+<li><a href="http://www.onlamp.com/pub/a/onlamp/2004/04/15/parrot_compiler_construction.html">Building a Parrot Compiler</a></li>
+<li><a href="http://www.cs.man.ac.uk/~pjj/farrell/compmain.html">Compiler Basics</a></li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0201403536">Compiler Construction</a> $</li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0442275366">Compiler Design and Construction</a></li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0805321667">Crafting a Compiler with C</a> $</li>
+<li><a href="http://en.wikipedia.org/wiki/Compilers%3a_Principles%2C_Techniques%2C_and_Tools">Dragon Book</a> $ - Widely considered "the book" for compiler writing.</li>
+<li><a href="http://www.cs.indiana.edu/eopl/">Essentials of Programming Languages</a></li>
+<li><a href="http://flipcode.com/archives/articles.shtml">Flipcode Article Archive</a></li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/1931841578">Game Scripting Mastery</a> $</li>
+<li><a href="http://www.icemanind.com/VMCS.pdf">How to build a virtual machine from scratch in C#</a> ¶</li>
+<li><a href="http://research.microsoft.com/~simonpj/papers/pj-lester-book/">Implementing Functional Languages</a></li>
+<li><a href="http://www.codeproject.com/KB/recipes/programminglanguagetoools.aspx">Implementing Programming Languages using C# 4.0</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Interpreter_pattern">Interpreter pattern</a> (described in <a href="http://rads.stackoverflow.com/amzn/click/0201633612">Design Patterns</a> $) specifies a way to evaluate sentences in a language</li>
+<li><a href="http://pragprog.com/titles/tpdsl/language-implementation-patterns">Language Implementation Patterns: Create Your Own Domain-Specific and General Programming Languages</a></li>
+<li><a href="http://compilers.iecc.com/crenshaw/">Lets Build a Compiler</a> - The <a href="http://www.stack.nl/~marcov/compiler.pdf">PDF</a> ¶ version</li>
+<li><a href="http://tinyurl.com/5txtuk">Linkers and Loaders</a> $ (Google Books)</li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0521562473">Lisp in Small Pieces (LiSP)</a> $</li>
+<li><a href="http://llvm.org/docs/tutorial/">LLVM Tutorial</a></li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0521607647">Modern Compiler Implementation in ML</a> $ - There is a <a href="http://rads.stackoverflow.com/amzn/click/052182060X">Java</a> $ and <a href="http://rads.stackoverflow.com/amzn/click/0521607655">C</a> $ version as well - widly considered a very good book</li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/013630740X">Object-Oriented Compiler Construction</a></li>
+<li><a href="http://www.parrotblog.org/2008/03/targeting-parrot-vm.html">Parrot Tutorial</a></li>
+<li><a href="http://www.dickgrune.com/Books/PTAPG_1st_Edition/">Parsing Techniques - A Practical Guide</a></li>
+<li><a href="http://www-old.oberon.ethz.ch/WirthPubl/ProjectOberon.pdf">Project Oberon</a> ¶ - Look at chapter 13</li>
+<li><a href="http://rads.stackoverflow.com/amzn/click/0137302673">Programming a Personal Computer</a> $</li>
+<li><a href="http://www.cs.brown.edu/~sk/Publications/Books/ProgLangs/">Programing Languages: Application and Interpretation</a></li>
+<li><a href="http://repository.readscheme.org/ftp/papers/ai-lab-pubs/AITR-474.pdf">Rabbit: A Compiler for Scheme</a>¶</li>
+<li><a href="http://cm.bell-labs.com/who/ken/trust.html">Reflections on Trusting Trust</a> - a quick guide</li>
+<li><a href="http://msdn.microsoft.com/en-us/magazine/cc136756.aspx">Roll Your Own Compiler for the .NET framework</a> a quick toturial form MSDN</li>
+<li><a href="http://mitpress.mit.edu/sicp/">Structure and Interpretation of Computer Programs</a></li>
+<li><a href="http://www.cis.upenn.edu/~bcpierce/tapl/">Types and Programming Languages</a></li>
+<li><a href="http://prog21.dadgum.com/30.html">Want to Write a Compiler?</a> - a quick guide</li>
+<li><a href="http://www.hokstad.com/writing-a-compiler-in-ruby-bottom-up-step-1.html">Writing a Compiler in Ruby Bottom Up</a></li>
+</ul>
+
+<p>Legend:<br>
+¶ Link to a PDF<br>
+$ Link to a printed book</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1672" title="short permalink to this answer" class="short-link" id="link-post-1672">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1672/revisions" title="show all edits to this post">edited <span title="2011-12-13 17:44:57Z" class="relativetime">Dec 13 '11 at 17:44</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1672" href="http://stackoverflow.com/posts/1672/revisions" title="show revision history for this post">
+        23 revs, 14 users 29%<br></a><a href="http://stackoverflow.com/users/184528">cdiggins</a>
+
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1672" class="comments" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="6" data-addlink-html="add comment" data-addlink-disabled="true">
+
+    <tr id="comment-49359" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="hot">17</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">It was one of my favorites. ;)</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/22016/vijesh-vp" title="2500 reputation" class="comment-user">Vijesh VP</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment49359_1672"><span title="2008-10-01 20:27:58Z" class="relativetime-clean">Oct 1 '08 at 20:27</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-98911" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="supernova">57</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">This post originally just had Dragon Book in it, but was modified to include the whole list. So Vijesh is referring to the Dragon Book.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/340/anton" title="2974 reputation" class="comment-user owner">Anton</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment98911_1672"><span title="2008-10-24 14:54:44Z" class="relativetime-clean">Oct 24 '08 at 14:54</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-148540" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">3</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">Is the C-Python source code something good to look at too? or the Lua source?</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/36590/brun" title="13697 reputation" class="comment-user">brun</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment148540_1672"><span title="2008-11-20 00:00:29Z" class="relativetime-clean">Nov 20 '08 at 0:00</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-945593" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">4</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">I would add "Lisp In Small Pieces" by Christian Queinnec. Building a Lisp compiler (and environment) can be quite different from building a C or Pascal compiler. It would at least contribute to widen your understanding of the language implementation world. :-)</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/114979/jay" title="2380 reputation" class="comment-user">Jay</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment945593_1672"><span title="2009-07-14 21:55:37Z" class="relativetime-clean">Jul 14 '09 at 21:55</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-2996907" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="warm">8</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">I've read <code>Let's Build a Compiler</code> [<a href="http://compilers.iecc.com/crenshaw/]" rel="nofollow">compilers.iecc.com/crenshaw/]</a> series, it is really nice writeup and is a good starting point.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/13198/thevillageidiot" title="19946 reputation" class="comment-user">TheVillageIdiot</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment2996907_1672"><span title="2010-05-31 04:35:19Z" class="relativetime-clean">May 31 '10 at 4:35</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1672" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>6</b> more comments</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+<script type="text/javascript">
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk916780378",4).setZone(44) ; });                    
+            </script>
+            <div class="everyonelovesstackoverflow adzerk-vote" id="adzerk916780378">
+            <iframe id="ados_frame_adzerk916780378_102216" frameborder="0" scrolling="no" height="90" width="728"></iframe><div class="adzerk-vote-controls" style="display:none;"><div class="adzerk-vote-option adzerk-vote-up"><div class="adzerk-vote-icon"></div></div><div class="adzerk-vote-option adzerk-vote-down"><div class="adzerk-vote-icon"></div></div></div><div class="adzerk-vote-survey" style="display:none;"><form><span>No problem. We won't show you that ad again. Why didn't you like it?</span><ul><li><label><input type="radio" value="12" name="downvoteReason">Uninteresting</label></li><li><label><input type="radio" value="13" name="downvoteReason">Misleading</label></li><li><label><input type="radio" value="14" name="downvoteReason">Offensive</label></li><li><label><input type="radio" value="15" name="downvoteReason">Repetitive</label></li></ul><a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#" class="adzerk-vote-cancel">Oops! I didn't mean to do this.</a></form></div><img height="0px" width="0px" border="0" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/i(1).gif"></div>
+  
+<a name="1156434"></a>
+<div id="answer-1156434" class="answer ice-ice-baby" data-answerid="1156434">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1156434">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">56</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>This is a pretty vague question, I think; just because of the depth of the topic involved.  A compiler can be decomposed into two separate parts, however; a top-half and a bottom-one.  The top-half generally takes the source language and converts it into an intermediate representation, and the bottom half takes care of the platform specific code generation.</p>
+
+<p>Nonetheless, one idea for an easy way to approach this topic (the one we used in my compilers class, at least) is to build the compiler in the two pieces described above.  Specifically, you'll get a good idea of the entire process by just building the top-half.</p>
+
+<p>Just doing the top half lets you get the experience of writing the lexical analyzer and the parser and go to generating some "code" (that intermediate representation I mentioned).  So it will take your source program and convert it to another representation and do some optimization (if you want), which is the heart of a compiler.  The bottom half will then take that intermediate representation and generate the bytes needed to run the program on a specific architecture.  For example, the the bottom half will take your intermediate representation and generate a PE executable.  </p>
+
+<p>Some books on this topic that I found particularly helpful was <a href="http://rads.stackoverflow.com/amzn/click/0321486811" rel="nofollow">Compilers Principles and Techniques</a> (or the Dragon Book, due to the cute dragon on the cover).  It's got some great theory and definitely covers Context-Free Grammars in a really accessible manner.  Also, for building the lexical analyzer and parser, you'll probably use the *nix tools lex and yacc.  And uninterestingly enough, the book called "<a href="http://rads.stackoverflow.com/amzn/click/1565920007" rel="nofollow">lex and yacc</a>" picked up where the Dragon Book left off for this part.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1156434" title="short permalink to this answer" class="short-link" id="link-post-1156434">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/1156434/revisions" title="show all edits to this post"><span title="2009-07-20 23:01:20Z" class="relativetime">Jul 20 '09 at 23:01</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Sep 2 &#39;10 at 17:42. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1156434" href="http://stackoverflow.com/posts/1156434/revisions" title="show revision history for this post">
+        mrduclaw
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1156434" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1156434" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1686"></a>
+<div id="answer-1686" class="answer ice-ice-baby" data-answerid="1686">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1686">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">36</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I concur with the Dragon Book reference; IMO, it is the definitive guide to compiler construction. Get ready for some hardcore theory, though.</p>
+
+<p>If you want a book that is lighter on theory, <a href="http://rads.stackoverflow.com/amzn/click/1931841578" rel="nofollow">Game Scripting Mastery</a> might be a better book for you. If you are a total newbie at compiler theory, it provides a gentler introduction. It doesn't cover more practical parsing methods (opting for non-predictive recursive descent without discussing LL or LR parsing), and as I recall, it doesn't even discuss any sort of optimization theory. Plus, instead of compiling to machine code, it compiles to a bytecode that is supposed to run on a VM that you also write.</p>
+
+<p>It's still a decent read, particularly if you can pick it up for cheap on Amazon. If you only want an easy introduction into compilers, Game Scripting Mastery is not a bad way to go. If you want to go hardcore up front, then you should settle for nothing less than the Dragon Book.</p></div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1686" title="short permalink to this answer" class="short-link" id="link-post-1686">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/1686/revisions" title="show all edits to this post"><span title="2008-08-04 23:08:18Z" class="relativetime">Aug 4 '08 at 23:08</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1686" href="http://stackoverflow.com/posts/1686/revisions" title="show revision history for this post">
+        Daniel F. Hanson
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1686" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="2" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1686" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>2</b> more comments</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="7085"></a>
+<div id="answer-7085" class="answer ice-ice-baby" data-answerid="7085">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="7085">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">35</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I think <a href="http://rads.stackoverflow.com/amzn/click/0521607647" rel="nofollow" title="Modern Compiler Implementation in ML">Modern Compiler Implementation in ML</a> is the best introductory compiler writing text. There's a <a href="http://rads.stackoverflow.com/amzn/click/052182060X" rel="nofollow" title="Modern Compiler Implementation in Java">Java version</a> and a <a href="http://rads.stackoverflow.com/amzn/click/0521607655" rel="nofollow" title="Modern Compiler Implementation in C">C version</a> too, either of which might be more accessible given your languages background. The book packs a lot of useful basic material (scanning and parsing, semantic analysis, activation records, instruction selection, RISC and x86 native code generation) and various "advanced" topics (compiling OO and functional languages, polymorphism, garbage collection, optimization and single static assignment form) into relatively little space (~500 pages).</p>
+
+<p>I prefer Modern Compiler Implementation to the Dragon book because Modern Compiler implementation surveys less of the field--instead it has really solid coverage of all the topics you would need to write a serious, decent compiler. After you work through this book you'll be ready to tackle research papers directly for more depth if you need it.</p>
+
+<p>I must confess I have a serious soft spot for Niklaus Wirth's <a href="http://rads.stackoverflow.com/amzn/click/0201403536" rel="nofollow" title="Compiler Construction">Compiler Construction.</a> It is <a href="http://www-old.oberon.ethz.ch/WirthPubl/CBEAll.pdf" rel="nofollow" title="Compiler Construction (PDF)">available online</a> as a PDF. I find Wirth's programming aesthetic simply beautiful, however some people find his style too minimal (for example Wirth favors recursive descent parsers, but most CS courses focus on parser generator tools; Wirth's language designs are fairly conservative.) Compiler Construction is a very succinct distillation of Wirth's basic ideas, so whether you like his style or not or not, I highly recommend reading this book.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/7085" title="short permalink to this answer" class="short-link" id="link-post-7085">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/7085/revisions" title="show all edits to this post"><span title="2008-08-10 07:54:32Z" class="relativetime">Aug 10 '08 at 7:54</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-7085" href="http://stackoverflow.com/posts/7085/revisions" title="show revision history for this post">
+        Dominic Cooney
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-7085" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-7085" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1693"></a>
+<div id="answer-1693" class="answer ice-ice-baby" data-answerid="1693">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1693">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">18</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>If you're looking to use powerful, higher level tools rather than building <em>everything</em> yourself, going through the projects and readings for <a href="http://www.antlr.org/wiki/display/CS652/CS652+Home" rel="nofollow">this course</a> is a pretty good option.  It's a languages course by the author of the Java parser engine ANTLR.  You can get the book for the course as a PDF from <a href="http://www.pragprog.com/titles/tpantlr/the-definitive-antlr-reference" rel="nofollow">the Pragmatic Programmers</a>.</p>
+
+<p>The course goes over the standard compiler compiler stuff that you'd see elsewhere: parsing, types and type checking, polymorphism, symbol tables, and code generation.  Pretty much the only thing that isn't covered is optimizations.  The final project is  a program that <a href="http://www.antlr.org/wiki/display/CS652/C+subset+compiler" rel="nofollow">compiles a subset of C</a>.  Because you use tools like ANTLR and LLVM, it's feasible to write the entire compiler in a single day (I have an existence proof of this, though I do mean ~24 hours).  It's heavy on practical engineering using modern tools, a bit lighter on theory.</p>
+
+<p>LLVM, by the way, is simply fantastic.  Many situations where you might normally compile down to assembly, you'd be much better off compiling to <a href="http://llvm.org/docs/LangRef.html" rel="nofollow">LLVM's Intermediate Representation</a> instead.  It's higher level, cross platform, and LLVM is quite good at generating optimized assembly from it.</p></div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1693" title="short permalink to this answer" class="short-link" id="link-post-1693">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1693/revisions" title="show all edits to this post">edited <span title="2008-08-04 23:25:02Z" class="relativetime">Aug 4 '08 at 23:25</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1693" href="http://stackoverflow.com/posts/1693/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/101">Peter Burns</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1693" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1693" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1678"></a>
+<div id="answer-1678" class="answer ice-ice-baby" data-answerid="1678">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1678">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">16</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p><a href="http://compilers.iecc.com/crenshaw/" rel="nofollow">"Let's Build a Compiler"</a> is awesome, but it's a bit outdated. (I'm not saying it makes it even a little bit less valid)</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1678" title="short permalink to this answer" class="short-link" id="link-post-1678">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1678/revisions" title="show all edits to this post">edited <span title="2010-08-29 00:11:43Z" class="relativetime">Aug 29 '10 at 0:11</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1678" href="http://stackoverflow.com/posts/1678/revisions" title="show revision history for this post">
+        2 revs, 2 users 67%<br></a><a href="http://stackoverflow.com/users/52">saniul</a>
+
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1678" class="comments" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+
+    <tr id="comment-3932046" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">3</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">I agree that this series is a bit outdated, although it is still useful.  However, my biggest gripe with it is the fact that it tries to output straight to assembly language rather than building any type of parse tree, which means (contrary to what is stated in the first article) that it isn't very useful for writing an interpreter.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/106762/a-m0d" title="5366 reputation" class="comment-user">a_m0d</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment3932046_1678"><span title="2010-09-16 06:58:36Z" class="relativetime-clean">Sep 16 '10 at 6:58</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1678" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1156391"></a>
+<div id="answer-1156391" class="answer ice-ice-baby" data-answerid="1156391">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1156391">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">14</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>You might want to look into Lex/Yacc (or Flex/Bison, whatever you want to call them). Flex is a lexical analyzer, which will parse and identify the semantic components ("tokens") of your language, and Bison will be used to define what happens when each token is parsed. This could be, but is definitely not limited to, printing out C code, for a compiler that would compile to C, or dynamically running the instructions.</p>
+
+<p><a href="http://tldp.org/HOWTO/Lex-YACC-HOWTO-5.html" rel="nofollow">This FAQ</a> should help you, and <a href="http://www.mactech.com/articles/mactech/Vol.16/16.07/UsingFlexandBison/" rel="nofollow">this tutorial</a> looks quite useful.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1156391" title="short permalink to this answer" class="short-link" id="link-post-1156391">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/1156391/revisions" title="show all edits to this post"><span title="2009-07-20 22:47:04Z" class="relativetime">Jul 20 '09 at 22:47</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Sep 2 &#39;10 at 17:42. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1156391" href="http://stackoverflow.com/posts/1156391/revisions" title="show revision history for this post">
+        Zachary Murray
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1156391" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1156391" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="3592870"></a>
+<div id="answer-3592870" class="answer ice-ice-baby" data-answerid="3592870">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="3592870">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">14</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>If you have little time, I recommend <a href="http://www.ethoberon.ethz.ch/WirthPubl/CBEAll.pdf" rel="nofollow">Niklaus Wirth's "Compiler Construction" (Addison-Wesley. 1996)</a>, a tiny little booklet that you can read in a day, but it explains the basics (including how to implement lexers, recursive descent parsers, and your own stack-based virtual machines). After that, if you want a deep dive, there's no way around the Dragon book as other commenters suggest.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/3592870" title="short permalink to this answer" class="short-link" id="link-post-3592870">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/3592870/revisions" title="show all edits to this post">edited <span title="2011-10-18 13:55:17Z" class="relativetime">Oct 18 '11 at 13:55</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Aug 28 &#39;10 at 23:14. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-3592870" href="http://stackoverflow.com/posts/3592870/revisions" title="show revision history for this post">
+        2 revs, 2 users 67%<br></a><a href="http://stackoverflow.com/users/444469">Matthieu</a>
+
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-3592870" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="2" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-3592870" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>2</b> more comments</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="2523"></a>
+<div id="answer-2523" class="answer ice-ice-baby" data-answerid="2523">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="2523">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">8</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p><a href="http://rads.stackoverflow.com/amzn/click/0321486811" rel="nofollow">The Dragon Book</a> is definitely the "building compilers" book, but if your language isn't quite as complicated as the current generation of languages, you may want to look at the Interpreter pattern from <a href="http://rads.stackoverflow.com/amzn/click/0201633612" rel="nofollow">Design Patterns</a>.</p>
+
+<p>The example in the book designs a regular expression-like language and is well thought through, but as they say in the book, it's good for thinking through the process but is effective really only on small languages. However, it is much faster to write an Interpreter for a small language with this pattern than having to learn about all the different types of parsers, yacc and lex, et cetera...</p></div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/2523" title="short permalink to this answer" class="short-link" id="link-post-2523">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/2523/revisions" title="show all edits to this post"><span title="2008-08-05 16:16:01Z" class="relativetime">Aug 5 '08 at 16:16</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-2523" href="http://stackoverflow.com/posts/2523/revisions" title="show revision history for this post">
+        Chris Bunch
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2523" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-2523" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="401786"></a>
+<div id="answer-401786" class="answer ice-ice-baby" data-answerid="401786">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="401786">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">8</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I am looking into the same concept, and found this promising article by Joel Pobar,</p>
+
+<p><a href="http://msdn.microsoft.com/en-us/magazine/cc136756.aspx" rel="nofollow">Create a Language Compiler for the .NET Framework</a></p>
+
+<p>he discusses a high level concept of a compiler and proceeds to invent his own langauge for the .Net framework. Although its aimed at the .Net Framework, many of the concepts should be able to be reproduced. The Article covers:</p>
+
+<ol>
+<li>Langauge definition </li>
+<li>Scanner </li>
+<li>Parser (the bit im mainly interested in)</li>
+<li>Targeting the .Net Framework The</li>
+<li>Code Generator</li>
+</ol>
+
+<p>there are other topics, but you get the just.</p>
+
+<p>Its aimed to people starting out, written in C# (not quite Java)</p>
+
+<p>HTH</p>
+
+<p>bones</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/401786" title="short permalink to this answer" class="short-link" id="link-post-401786">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/401786/revisions" title="show all edits to this post"><span title="2008-12-30 23:01:20Z" class="relativetime">Dec 30 '08 at 23:01</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Dec 30 &#39;08 at 23:01. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-401786" href="http://stackoverflow.com/posts/401786/revisions" title="show revision history for this post">
+        dbones
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-401786" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="2" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-401786" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>2</b> more comments</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="17768"></a>
+<div id="answer-17768" class="answer ice-ice-baby" data-answerid="17768">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="17768">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">8</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><blockquote>
+  <p>"... Let's Build a Compiler ..."</p>
+</blockquote>
+
+<p>I'd second <a href="http://compilers.iecc.com/crenshaw/" rel="nofollow">http://compilers.iecc.com/crenshaw/</a> by <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#1678" rel="nofollow">@sasb</a>. Forget buying more books for the moment.</p>
+
+<p>Why?  Tools &amp; language. </p>
+
+<p>The language required is Pascal and if I remember correctly is based on Turbo-Pascal. It just so happens if you go to <a href="http://www.freepascal.org/" rel="nofollow">http://www.freepascal.org/</a> and download the Pascal compiler all the examples work straight from the page ~ <a href="http://www.freepascal.org/download.var" rel="nofollow">http://www.freepascal.org/download.var</a> The beaut thing about Free Pascal is you can use it almost whatever processor or OS you can care for. </p>
+
+<p>Once you have mastered the lessons then try the more advanced <em>"<a href="http://en.wikipedia.org/wiki/Dragon_book" rel="nofollow">Dragon Book</a>"</em> ~ <a href="http://en.wikipedia.org/wiki/Dragon_book" rel="nofollow">http://en.wikipedia.org/wiki/Dragon_book</a></p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/17768" title="short permalink to this answer" class="short-link" id="link-post-17768">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/17768/revisions" title="show all edits to this post">edited <span title="2009-03-05 22:21:23Z" class="relativetime">Mar 5 '09 at 22:21</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-17768" href="http://stackoverflow.com/posts/17768/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/2092">bootload</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-17768" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-17768" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1158408"></a>
+<div id="answer-1158408" class="answer ice-ice-baby" data-answerid="1158408">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1158408">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">8</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Generally speaking, there's no five minutes tutorial for compilers, because it's a complicated topic and writing a compiler can take months. You will have to do your own search.</p>
+
+<p>Python and Ruby are usually interpreted. Perhaps you want to start with an interpreter as well. It's generally easier.</p>
+
+<p>The first step is to write a formal language description, the grammar of your programming language. Then you have to transform the source code that you want to compile or interpret according to the grammar into an abstract syntax tree, an internal form of the source code that the computer understands and can operate on. This step is usually called parsing and the software that parses the source code is called a parser. Often the parser is generated by a parser generator which transform a formal grammar into source oder machine code. For a good, non-mathematical explanation of parsing I recommend Parsing Techniques - A Practical Guide. Wikipedia has a comparison of parser generators from which you can choose that one that is suitable for you. Depending on the parser generator you chose, you will find tutorials on the Internet and for really popular parser generators (like GNU bison) there are also books.</p>
+
+<p>Writing a parser for your language can be really hard, but this depends on your grammar. So I suggest to keep your grammar simple (unlike C++); a good example for this is LISP.</p>
+
+<p>In the second step the abstract syntax tree is transformed from a tree structure into a linear intermediate representation. As a good example for this Lua's bytecode is often cited. But the intermediate representation really depends on your language.</p>
+
+<p>If you are building an interpreter, you will simply have to interpret the intermediate representation. You could also just-in-time-compile it. I recommend LLVM and libjit for just-in-time-compilation. To make the language usable you will also have to include some input and output functions and perhaps a small standard library.</p>
+
+<p>If you are going to compile the language, it will be more complicated. You will have to write backends for different computer architectures and generate machine code from the intermediate representation in those backends. I recommend LLVM for this task.</p>
+
+<p>There are a few books on this topic, but I can recommend none of them for general use. Most of them are too academic or too practical. There's no "Teach yourself compiler writing in 21 days" and thus, you will have to buy several books to get a good understanding of this entire topic. If you search the Internet, you will come across some some online books and lecture notes. Maybe there's a university library nearby you where you can borrow books on compilers.</p>
+
+<p>I also recommend a good background knowledge in theoretical computer science and graph theory, if you are going to make your project serious. A degree in computer science will also be helpful.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1158408" title="short permalink to this answer" class="short-link" id="link-post-1158408">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/1158408/revisions" title="show all edits to this post"><span title="2009-07-21 10:37:00Z" class="relativetime">Jul 21 '09 at 10:37</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Sep 2 &#39;10 at 17:42. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1158408" href="http://stackoverflow.com/posts/1158408/revisions" title="show revision history for this post">
+        user141335
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1158408" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="1" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1158408" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>1</b> more comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="15178"></a>
+<div id="answer-15178" class="answer ice-ice-baby" data-answerid="15178">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="15178">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">7</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>One book not yet suggested but very important is <a href="http://books.google.com/books?id=h34d_jr2iikC&dq=%22linkers+and+loaders%22&pg=PP1&ots=IxFkFWJ-8V&sig=GSlclmkezTRL6YYguGJmZsnkM3c&hl=en&sa=X&oi=book_result&resnum=1&ct=result" rel="nofollow">"Linkers and Loaders"</a> by John Levine.  If you're not using an external assembler, you'll need a way to output a object file that can be linked into your final program.  Even if you're using an external assembler, you'll probably need to understand relocations and how the whole program loading process works to make a working tool.  This book collects a lot of the random lore around this process for various systems, including Win32 and Linux.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/15178" title="short permalink to this answer" class="short-link" id="link-post-15178">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/15178/revisions" title="show all edits to this post"><span title="2008-08-18 20:18:32Z" class="relativetime">Aug 18 '08 at 20:18</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-15178" href="http://stackoverflow.com/posts/15178/revisions" title="show revision history for this post">
+        Ben Combee
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-15178" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-15178" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="17694"></a>
+<div id="answer-17694" class="answer ice-ice-baby" data-answerid="17694">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="17694">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">7</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>If you're willing to use LLVM, check this out: <a href="http://llvm.org/docs/tutorial/" rel="nofollow"></a><a href="http://llvm.org/docs/tutorial/" rel="nofollow">http://llvm.org/docs/tutorial/</a>. It teaches you how to write a compiler from scratch using LLVM's framework, and doesn't assume you have any knowledge about the subject.</p>
+
+<p>The tutorial suggest you write your own parser and lexer etc, but I advise you to look into bison and flex once you get the idea. They make life so much easier.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/17694" title="short permalink to this answer" class="short-link" id="link-post-17694">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/17694/revisions" title="show all edits to this post"><span title="2008-08-20 10:01:17Z" class="relativetime">Aug 20 '08 at 10:01</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-17694" href="http://stackoverflow.com/posts/17694/revisions" title="show revision history for this post">
+        wvdschel
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-17694" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-17694" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="2853691"></a>
+<div id="answer-2853691" class="answer ice-ice-baby" data-answerid="2853691">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="2853691">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">7</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Take a look at the book below. The author is the creator of <a href="http://www.antlr.org/" rel="nofollow">ANTLR</a>.</p>
+
+<p><a href="http://pragprog.com/titles/tpdsl/language-implementation-patterns" rel="nofollow">Language Implementation Patterns: Create Your Own Domain-Specific and General Programming Languages</a>.</p>
+
+<p><img src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/46869271.JPG" alt="alt text"></p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/2853691" title="short permalink to this answer" class="short-link" id="link-post-2853691">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/2853691/revisions" title="show all edits to this post"><span title="2010-05-17 23:38:29Z" class="relativetime">May 17 '10 at 23:38</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of May 17 &#39;10 at 23:38. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-2853691" href="http://stackoverflow.com/posts/2853691/revisions" title="show revision history for this post">
+        Taylor Leese
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-2853691" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-2853691" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="17690"></a>
+<div id="answer-17690" class="answer ice-ice-baby" data-answerid="17690">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="17690">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">6</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>An easy way to create a compiler is to use bison and flex (or similar), build a tree (AST) and generate code in C. With generating C code being the most important step. By generating C code, your language will automatically work on all platforms that have a C compiler.</p>
+
+<p>Generating C code is as easy as generating HTML (just use print, or equivalent), which in turn is much easier than writing a C parser or HTML parser.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/17690" title="short permalink to this answer" class="short-link" id="link-post-17690">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/17690/revisions" title="show all edits to this post"><span title="2008-08-20 09:56:34Z" class="relativetime">Aug 20 '08 at 9:56</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-17690" href="http://stackoverflow.com/posts/17690/revisions" title="show revision history for this post">
+        Peter Stuifzand
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-17690" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-17690" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="74176"></a>
+<div id="answer-74176" class="answer ice-ice-baby" data-answerid="74176">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="74176">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">6</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>The LCC compiler (<a href="http://en.wikipedia.org/wiki/Local_C_compiler" rel="nofollow">wikipedia</a>) (<a href="http://www.cs.princeton.edu/software/lcc/" rel="nofollow">project homepage</a>) of Fraser and Hanson is described in their book "A Retargetable C Compiler: Design and Implementation". It is quite readable and explains the whole compiler, down to code generation. </p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/74176" title="short permalink to this answer" class="short-link" id="link-post-74176">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/74176/revisions" title="show all edits to this post"><span title="2008-09-16 16:21:23Z" class="relativetime">Sep 16 '08 at 16:21</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-74176" href="http://stackoverflow.com/posts/74176/revisions" title="show revision history for this post">
+        mfx
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-74176" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-74176" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="3125367"></a>
+<div id="answer-3125367" class="answer ice-ice-baby" data-answerid="3125367">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="3125367">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">6</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>From the <a href="http://www.faqs.org/faqs/compilers/faq/" rel="nofollow">comp.compilers FAQ</a>:</p>
+
+<p>"Programming a Personal Computer" by Per Brinch Hansen
+Prentice-Hall 1982 ISBN 0-13-730283-5</p>
+
+<p>This unfortunately-titled book
+explains the design and creation of a single-user programming environment
+for micros, using a Pascal-like language called Edison.  The author presents
+all source code and explanations for the step-by-step implementation of an
+Edison compiler and simple supporting operating system, all written in
+Edison itself (except for a small supporting kernel written in a symbolic
+assembler for PDP 11/23; the complete source can also be ordered for the IBM
+PC).</p>
+
+<p>The most interesting things about this book are:  1) its ability to
+demonstrate how to create a complete, self-contained, self-maintaining,
+useful compiler and operating system, and 2) the interesting discussion of
+language design and specification problems and trade-offs in Chapter 2.</p>
+
+<p>"Brinch Hansen on Pascal Compilers" by Per Brinch Hansen
+Prentice-Hall 1985 ISBN 0-13-083098-4</p>
+
+<p>Another light-on-theory
+heavy-on-pragmatics here's-how-to-code-it book.  The author presents the
+design, implementation, and complete source code for a compiler and p-code
+interpreter for Pascal- (Pascal "minus"), a Pascal subset with boolean and
+integer types (but no characters, reals, subranged or enumerated types),
+constant and variable definitions and array and record types (but no packed,
+variant, set, pointer, nameless, renamed, or file types), expressions,
+assignment statements, nested procedure definitions with value and variable
+parameters, if statements, while statements, and begin-end blocks (but no
+function definitions, procedural parameters, goto statements and labels,
+case statements, repeat statements, for statements, and with statements).</p>
+
+<p>The compiler and interpreter are written in Pascal* (Pascal "star"), a
+Pascal subset extended with some Edison-style features for creating
+software development systems.  A Pascal* compiler for the IBM PC is sold by
+the author, but it's easy to port the book's Pascal- compiler to any
+convenient Pascal platform.</p>
+
+<p>This book makes the design and implementation of a compiler look easy.  I
+particularly like the way the author is concerned with quality,
+reliability, and testing.  The compiler and interpreter can easily be used
+as the basis for a more involved language or compiler project, especially
+if you're pressed to quickly get something up and running. </p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/3125367" title="short permalink to this answer" class="short-link" id="link-post-3125367">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/3125367/revisions" title="show all edits to this post">edited <span title="2010-06-27 19:00:38Z" class="relativetime">Jun 27 '10 at 19:00</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Jun 26 &#39;10 at 20:17. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-3125367" href="http://stackoverflow.com/posts/3125367/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/357174">joe snyder</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-3125367" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-3125367" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="172181"></a>
+<div id="answer-172181" class="answer ice-ice-baby" data-answerid="172181">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="172181">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">6</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>You should check out Darius Bacon's "<a href="https://github.com/darius/ichbins" rel="nofollow" title="I can hardly believe it&#39;s not Scheme">ichbins</a>", which is a compiler for a small Lisp dialect, targeting C, in just over 6 pages of code.  The advantage it has over most toy compilers is that the language is complete enough that the compiler is written in it.  (The tarball also includes an interpreter to bootstrap the thing.)</p>
+
+<p>There's more stuff about what I found useful in learning to write a compiler on my <a href="http://www.canonical.org/~kragen/sw/urscheme/" rel="nofollow" title="a small self-hosted Scheme to x86 asm compiler">Ur-Scheme</a> web page.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/172181" title="short permalink to this answer" class="short-link" id="link-post-172181">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/172181/revisions" title="show all edits to this post">edited <span title="2010-12-01 12:50:57Z" class="relativetime">Dec 1 '10 at 12:50</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 5 &#39;08 at 16:00. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-172181" href="http://stackoverflow.com/posts/172181/revisions" title="show revision history for this post">
+        2 revs, 2 users 89%<br>Kragen Javier Sitaker
+
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-172181" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-172181" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="8690"></a>
+<div id="answer-8690" class="answer ice-ice-baby" data-answerid="8690">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="8690">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Python comes bundled with a python compiler written in Python. You can see the source code, and it includes all phases, from parsing, abstract syntax tree, emitting code, etc.
+Hack it.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/8690" title="short permalink to this answer" class="short-link" id="link-post-8690">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/8690/revisions" title="show all edits to this post"><span title="2008-08-12 11:25:34Z" class="relativetime">Aug 12 '08 at 11:25</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-8690" href="http://stackoverflow.com/posts/8690/revisions" title="show revision history for this post">
+        yeruham
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8690" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-8690" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="156867"></a>
+<div id="answer-156867" class="answer ice-ice-baby" data-answerid="156867">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="156867">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>If you are interested in writing a compiler for a functional language (rather than a procedural one) Simon Peyton-Jones and David Lester's "<a href="http://research.microsoft.com/~simonpj/papers/pj-lester-book/">Implementing functional languages: a tutorial</a>" is an excellent guide. </p>
+
+<p>The conceptual basics of how functional evaluation works is guided by examples in a simple but powerful functional language called "Core". Additionally, each part of the Core language compiler is explained with code examples in Miranda (a pure functional language very similar to Haskell). </p>
+
+<p>Several different types of compilers are described but even if you only follow the so-called template compiler for Core you will have an excellent understanding of what makes functional programming tick. </p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/156867" title="short permalink to this answer" class="short-link" id="link-post-156867">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/156867/revisions" title="show all edits to this post"><span title="2008-10-01 09:30:26Z" class="relativetime">Oct 1 '08 at 9:30</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-156867" href="http://stackoverflow.com/posts/156867/revisions" title="show revision history for this post">
+        Mark Reid
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-156867" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-156867" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="789357"></a>
+<div id="answer-789357" class="answer ice-ice-baby" data-answerid="789357">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="789357">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Sorry it is in spanish, but this is the bibliography of a course called "Compiladores e Intérpretes" (Compilers and Interpreters) in Argentina. </p>
+
+<p>The course was from formal language theory to compiler construction, and that's are the topics you need to build, at least, a simple compiler.</p>
+
+<blockquote>
+  <ul>
+  <li><p>Compilers Design in C. <br>    Allen I. Holub <br><br>
+  Prentice-Hall. 1990.</p></li>
+  <li><p>Compiladores. Teoría y Construcción. <br>    Sanchís
+  Llorca, F.J. ,  Galán Pascual, C.     Editorial Paraninfo. 1988.</p></li>
+  <li><p>Compiler Construction. <br>    Niklaus Wirth <br><br>
+  Addison-Wesley. 1996.</p></li>
+  <li><p>Lenguajes, Gramáticas y Autómatas. Un enfoque práctico. <br>    Pedro
+  Isasi Viñuela, Paloma Martínez
+  Fernández, Daniel Borrajo Millán.     Addison-Wesley Iberoamericana
+  (España). 1997.</p></li>
+  <li><p>The art of compiler design. Theory and practice. <br>    Thomas
+  Pittman, James Peters. <br><br>
+  Prentice-Hall. 1992.</p></li>
+  <li><p>Object-Oriented Compiler Construction. <br>    Jim Holmes.
+  <br>    Prentice Hall, Englewood
+  Cliffs, N.J. 1995</p></li>
+  <li><p>Compiladores. Conceptos Fundamentales. <br>    B. Teufel, S.
+  Schmidt, T. Teufel. <br><br>
+  Addison-Wesley Iberoamericana. 1995.</p></li>
+  <li><p>Introduction to Automata Theory, Languages, and Computation. <br><br>
+  John E. Hopcroft. Jeffref D. Ullman.
+  <br>    Addison-Wesley. 1979.</p></li>
+  <li><p>Introduction to formal languages. <br>    György E. Révész. <br><br>
+  Mc Graw Hill. 1983.</p></li>
+  <li><p>Parsing Techniques. A Practical Guide. <br>    Dick Grune, Ceriel
+  Jacobs. <br>    Impreso por los
+  autores. 1995<br>
+  <a href="http://www.cs.vu.nl/~dick/PTAPG.html" rel="nofollow">http://www.cs.vu.nl/~dick/PTAPG.html</a></p></li>
+  <li><p>Yacc: Yet Another Compiler-Compiler. <br>    Stephen
+  C. Johnson <br>    Computing Science
+  Technical Report Nº 32, 1975. Bell
+  Laboratories. Murray Hill, New<br>
+  Jersey.</p></li>
+  <li><p>Lex: A Lexical Analyzer Generator. <br>    M. E. Lesk,  E. Schmidt.     Computing Science Technical
+  Report Nº 39, 1975. Bell Laboratories.
+  Murray Hill, New     Jersey.</p></li>
+  <li><p>lex &amp; yacc. <br>    John R. Levine, Tony Mason, Doug Brown. <br>
+  O’Reilly &amp; Associates. 1995.</p></li>
+  <li><p>Elements of the theory of computation. <br>    Harry R. Lewis,
+  Christos H. Papadimitriou.
+  Segunda Edición. Prentice Hall. 1998. </p></li>
+  <li><p>Un Algoritmo Eficiente para la Construcción del Grafo de Dependencia de Control.<br>
+  Salvador V. Cavadini.<br>
+  Trabajo Final de Grado para obtener el Título de Ingeniero en Computación.<br>
+  Facultad de Matemática Aplicada.
+  U.C.S.E. 2001.</p></li>
+  </ul>
+</blockquote>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/789357" title="short permalink to this answer" class="short-link" id="link-post-789357">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/789357/revisions" title="show all edits to this post"><span title="2009-04-25 17:23:55Z" class="relativetime">Apr 25 '09 at 17:23</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Apr 25 &#39;09 at 17:23. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-789357" href="http://stackoverflow.com/posts/789357/revisions" title="show revision history for this post">
+        eKek0
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-789357" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-789357" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1156383"></a>
+<div id="answer-1156383" class="answer ice-ice-baby" data-answerid="1156383">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1156383">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">5</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><ol>
+<li>This is a vast subject. Do not underestimate this point. And do not underestimate my point to not underestimate it.</li>
+<li>I hear the <a href="http://en.wikipedia.org/wiki/Dragon_Book_%28computer_science%29" rel="nofollow">Dragon Book</a> is a (the?) place to start. Edit: along with searching. :) Get better at searching, eventually it will be your life.</li>
+<li>Building your own programming language is absolutely a good exercise! But know that it will never be used for any practical purpose in the end. Exceptions to this are few and <em>very</em> far between.</li>
+</ol>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1156383" title="short permalink to this answer" class="short-link" id="link-post-1156383">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/1156383/revisions" title="show all edits to this post"><span title="2009-07-20 22:44:40Z" class="relativetime">Jul 20 '09 at 22:44</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Sep 2 &#39;10 at 17:42. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1156383" href="http://stackoverflow.com/posts/1156383/revisions" title="show revision history for this post">
+        280Z28
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1156383" class="comments" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="7" data-addlink-html="add comment" data-addlink-disabled="true">
+
+    <tr id="comment-975348" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">4</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">If you haven't read the Dragon book. Please don't recommend it. In fact, have you ever implemented a compiler?</span>
+	–&nbsp;
+		<span title="0 reputation" class="comment-user">anon</span>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment975348_1156383"><span title="2009-07-20 22:46:24Z" class="relativetime-clean">Jul 20 '09 at 22:46</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-975363" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">2</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">@Neil: You haven't google'd me, have you? lol. <a href="http://blog.280z28.org/" rel="nofollow">blog.280z28.org</a> But no, I haven't read that book.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/138304/280z28" title="41286 reputation" class="comment-user">280Z28</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment975363_1156383"><span title="2009-07-20 22:49:48Z" class="relativetime-clean">Jul 20 '09 at 22:49</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+    <tr id="comment-975423" class="comment">
+        <td class="comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="comment-score">
+                            
+                                <span title="number of &#39;useful comment&#39; votes received" class="cool">1</span>   
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>   
+        </td>
+        <td class="comment-text">
+            <div style="display: block;" class="comment-body">
+	<span class="comment-copy">To be fair, I prefaced it with "I hear...". :) #1 and #3 are the points I feel are extremely important to know going in but aren't mentioned as often.</span>
+	–&nbsp;
+		<a href="http://stackoverflow.com/users/138304/280z28" title="41286 reputation" class="comment-user">280Z28</a>
+	<span class="comment-date" dir="ltr"><a class="comment-link" href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler#comment975423_1156383"><span title="2009-07-20 23:07:39Z" class="relativetime-clean">Jul 20 '09 at 23:07</span></a></span>
+				</div>
+
+        </td>
+    </tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1156383" data-rep="50" data-anon="true" class="comments-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">show <b>7</b> more comments</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="22718"></a>
+<div id="answer-22718" class="answer ice-ice-baby" data-answerid="22718">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="22718">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">4</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I liked the <a href="http://compilers.iecc.com/crenshaw/" rel="nofollow">Crenshaw tutorial</a> too, because it makes it absolutely clear that a compiler is just another program that reads some input and writes some out put. </p>
+
+<p>Read it. </p>
+
+<p>Work it if you want, but then look at another reference on how bigger and more complete compilers are really written.</p>
+
+<p>And read <a href="http://cm.bell-labs.com/who/ken/trust.html" rel="nofollow">On Trusting Trust</a>, to get a clue about the unobvious things that can be done in this domain.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/22718" title="short permalink to this answer" class="short-link" id="link-post-22718">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/22718/revisions" title="show all edits to this post">edited <span title="2008-09-02 04:52:41Z" class="relativetime">Sep 2 '08 at 4:52</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-22718" href="http://stackoverflow.com/posts/22718/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/2509">dmckee</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-22718" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-22718" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="98010"></a>
+<div id="answer-98010" class="answer ice-ice-baby" data-answerid="98010">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="98010">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">4</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>There's a lot of good answers here, so i thought I'd just add one more to the list:</p>
+
+<p>I got a book called Project Oberon more than a decade ago, which has some very well written text on the compiler. The book really stands out in the sense that the source and explanations is very hands on and readable. The complete text (the 2005 edition) has been made available in pdf, so you can download right now. The compiler is discussed in chapter 12:</p>
+
+<p><a href="http://www-old.oberon.ethz.ch/WirthPubl/ProjectOberon.pdf" rel="nofollow">http://www-old.oberon.ethz.ch/WirthPubl/ProjectOberon.pdf</a></p>
+
+<p>Niklaus Wirth, Jürg Gutknecht</p>
+
+<p>(The treatment is not as extensive as his book on compilers)</p>
+
+<p>I've read several books on compilers, and i can second the dragon book, time spent on this book is very worthwhile.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/98010" title="short permalink to this answer" class="short-link" id="link-post-98010">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/98010/revisions" title="show all edits to this post">edited <span title="2008-09-18 23:36:55Z" class="relativetime">Sep 18 '08 at 23:36</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Oct 1 &#39;08 at 9:30. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-98010" href="http://stackoverflow.com/posts/98010/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/12677">tovare</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-98010" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-98010" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1241910"></a>
+<div id="answer-1241910" class="answer ice-ice-baby" data-answerid="1241910">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1241910">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">4</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I remember asking this question about seven years ago when I was rather new to programming.
+I was very careful when I asked and surprisingly I didn't get as much critisism as you are getting here. They did however point me in the direction of the "Dragon Book" which is in my opinion, a really great book that explains everything you need to know to write a compiler (You will of course have to master a language or two. The more languages you know, the marrier)</p>
+
+<p>And yes many people say reading that book is crazy and you wont learn anything from it, but 
+I disagree completely with that.</p>
+
+<p>Many people also say that writing compilers are stupid and pointless. Well, there are a number of reasons why compiler development are useful:
+- Because it's fun.
+- It's educational, when learning how to write compilers you will learn alot about computer science and other techinques that are useful when writing other applications.
+- If nobody wrote compilers the existing languages wouldn't get any better.</p>
+
+<p>I didn't write my own compiler right away, but after asking I knew where to start. And now, after learning many different languages and reading the Dragon Book, writing isn't that much of a problem. ( I'm also studying Computer Engineering atm, but most of what I know about programming is self taught )</p>
+
+<p>In conclusion:
+- The Dragon Book is a great "tutorial"
+But spend some time mastering a language or two before attempting to write a compiler.
+Don't expect to be a compiler guru within the next decade or so though.</p>
+
+<p>Edit:
+The book is also good if you want to learn how to write parsers/interpreters.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1241910" title="short permalink to this answer" class="short-link" id="link-post-1241910">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1241910/revisions" title="show all edits to this post">edited <span title="2009-08-06 22:42:15Z" class="relativetime">Aug 6 '09 at 22:42</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Sep 2 &#39;10 at 17:42. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1241910" href="http://stackoverflow.com/posts/1241910/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/150636">Pandafox</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1241910" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1241910" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="441108"></a>
+<div id="answer-441108" class="answer ice-ice-baby" data-answerid="441108">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="441108">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">3</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I have written an online tutorial on compiler design, titled "Let's build a scripting Engine-Compiler, as well as a native code compiler called Bxbasm.
+The Online doc's are at:
+<a href="http://geocities.com/blunt_axe_basic/tutor/Bxb-Tutor.doc" rel="nofollow">http://geocities.com/blunt_axe_basic/tutor/Bxb-Tutor.doc</a></p>
+
+<p>The docs, support files and compiler, in zip form, are at:
+<a href="http://geocities.com/blunt_axe_basic" rel="nofollow">http://geocities.com/blunt_axe_basic</a></p>
+
+<p>Also:
+<a href="http://tech.groups.yahoo.com/group/QDepartment" rel="nofollow">http://tech.groups.yahoo.com/group/QDepartment</a></p>
+
+<p>Steve A.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/441108" title="short permalink to this answer" class="short-link" id="link-post-441108">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/441108/revisions" title="show all edits to this post"><span title="2009-01-13 22:31:48Z" class="relativetime">Jan 13 '09 at 22:31</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Jan 13 &#39;09 at 22:31. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-441108" href="http://stackoverflow.com/posts/441108/revisions" title="show revision history for this post">
+        Steve A
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-441108" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-441108" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="1344367"></a>
+<div id="answer-1344367" class="answer ice-ice-baby" data-answerid="1344367">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="1344367">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">3</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Not a book, but a technical paper and an enormously fun learning experience if you want to know more about compilers (and metacompilers)... this website walks you through building a completely self-contained compiler system that can compile itself and other languages:</p>
+
+<p><a href="http://www.bayfronttechnologies.com/mc_tutorial.html" rel="nofollow">http://www.bayfronttechnologies.com/mc%5Ftutorial.html</a></p>
+
+<p>This is all based on an amazing little 10-page technical paper:</p>
+
+<p><i>Val Schorre</i> <b>META II: A Syntax-Oriented Compiler Writing Language</b></p>
+
+<p>from honest-to-god 1964. I learned how to build compilers from this back in 1970. There's a mind-blowing moment when you finally grok how the compiler can regenerate itself....</p>
+
+<p>I know the website author from my college days, but have nothing to do with the website.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/1344367" title="short permalink to this answer" class="short-link" id="link-post-1344367">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="http://stackoverflow.com/posts/1344367/revisions" title="show all edits to this post">edited <span title="2009-09-09 05:34:45Z" class="relativetime">Sep 9 '09 at 5:34</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Aug 28 &#39;09 at 0:01. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-1344367" href="http://stackoverflow.com/posts/1344367/revisions" title="show revision history for this post">
+        2 revs<br></a><a href="http://stackoverflow.com/users/120163">Ira Baxter</a>
+        
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-1344367" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-1344367" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="3125860"></a>
+<div id="answer-3125860" class="answer ice-ice-baby" data-answerid="3125860">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="3125860">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">3</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>Missing from the list: Garbage Collection: Algorithms for Automatic Dynamic Memory Management, by Jones and Lins.</p>
+
+<p>(Assuming you're writing the compiler <em>and</em> runtime system, and that you're implementing a garbage collected language.</p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/3125860" title="short permalink to this answer" class="short-link" id="link-post-3125860">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/3125860/revisions" title="show all edits to this post"><span title="2010-06-26 23:43:23Z" class="relativetime">Jun 26 '10 at 23:43</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Jun 26 &#39;10 at 23:43. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-3125860" href="http://stackoverflow.com/posts/3125860/revisions" title="show revision history for this post">
+        Jay
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-3125860" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-3125860" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+
+  
+<a name="3443032"></a>
+<div id="answer-3443032" class="answer ice-ice-baby" data-answerid="3443032">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+    <input type="hidden" name="_id_" value="3443032">
+    <a class="vote-up-off" title="This answer is useful">up vote</a>
+    <span class="vote-count-post ">3</span>
+    <a class="vote-down-off" title="This answer is not useful">down vote</a>
+    
+
+
+</div>
+
+            </td>
+
+
+
+<td class="answercell">
+    <div class="post-text"><p>I found the Dragon book much too hard to read with too much focus on language theory that is not really required to write a compiler in practice. </p>
+
+<p>I would add the Oberon book which contains the full source of an amazingly fast and simple oberon compiler <a href="http://rads.stackoverflow.com/amzn/click/0201544288" rel="nofollow">Project Oberon</a></p>
+
+<p><img src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/51TJFFSFEZL._SL500_AA300_.jpg" alt="alt text"></p>
+</div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="http://stackoverflow.com/a/3443032" title="short permalink to this answer" class="short-link" id="link-post-3443032">share</a></div>                    </td>
+    <td align="right" class="post-signature">
+<div class="user-info ">
+    <div class="user-action-time">
+        answered <a href="http://stackoverflow.com/posts/3443032/revisions" title="show all edits to this post"><span title="2010-08-09 18:33:42Z" class="relativetime">Aug 9 '10 at 18:33</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        <br>
+        
+    </div>
+</div>    </td>
+            
+
+
+    <td align="right" class="post-signature">   
+       
+
+    <div class="user-info">
+    <div class="user-details">
+        <span class="community-wiki" title="This post is community owned as of Aug 9 &#39;10 at 18:33. Votes do not generate reputation, and it can be edited by users with 100 rep">
+            community wiki
+        </span>
+    </div><br>
+    <div class="user-details">
+        <a id="history-3443032" href="http://stackoverflow.com/posts/3443032/revisions" title="show revision history for this post">
+        Lothar
+        </a>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>        </tr>
+
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-3443032" class="comments dno" data-localized="true">
+		    <table>
+			    <tbody data-remaining-comments-count="0" data-addlink-html="add comment" data-addlink-disabled="true">
+					    <tr><td></td><td></td></tr>
+			    </tbody>
+		    </table>
+	    </div>
+			<a id="comments-link-3443032" data-rep="50" data-anon="true" class="comments-link disabled-link" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add comment</a>
+    </td>
+</tr>
+    </tbody></table>
+</div>
+<div class="pager-answers">
+        
+
+
+
+
+ <span class="page-numbers current">1</span>         <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?page=2&tab=votes#tab-top" title="go to page 2"> <span class="page-numbers">2</span> </a> 
+        <a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?page=2&tab=votes#tab-top" rel="next" title="go to page 2"> <span class="page-numbers next"> next</span> </a> 
+
+    </div>				
+
+
+						<h2 class="bottom-notice">
+Not the answer you're looking for?							Browse other questions tagged <a href="http://stackoverflow.com/questions/tagged/compiler" class="post-tag" title="show questions tagged &#39;compiler&#39;" rel="tag">compiler</a> <a href="http://stackoverflow.com/questions/tagged/language-agnostic" class="post-tag" title="show questions tagged &#39;language-agnostic&#39;" rel="tag">language-agnostic</a>  or <a href="http://stackoverflow.com/questions/ask">ask your own question</a>.						</h2>
+			</div>
+		</div>
+				<div id="sidebar" class="show-votes">
+							<div class="module question-stats">
+					<p class="label-key">tagged</p>
+					<div class="tagged"><a href="http://stackoverflow.com/questions/tagged/compiler" class="post-tag" title="show questions tagged &#39;compiler&#39;" rel="tag">compiler</a>&nbsp;<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;<span class="item-multiplier-count">7794</span></span><br>
+<a href="http://stackoverflow.com/questions/tagged/language-agnostic" class="post-tag" title="show questions tagged &#39;language-agnostic&#39;" rel="tag">language-agnostic</a>&nbsp;<span class="item-multiplier"><span class="item-multiplier-x">×</span>&nbsp;<span class="item-multiplier-count">6537</span></span><br>
+</div>
+					<table id="qinfo">
+						<tbody><tr>
+							<td>
+								<p class="label-key">asked</p>
+							</td>
+							<td style="padding-left: 10px">
+								<p class="label-key" title="2008-08-04 22:46:36Z"><b>5 years ago</b></p>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<p class="label-key">viewed</p>
+							</td>
+
+							<td style="padding-left: 10px">
+								<p class="label-key">
+									<b>140325 times</b>
+								</p>
+							</td>
+						</tr>
+							<tr>
+								<td>
+									<p class="label-key">active</p>
+								</td>
+								<td style="padding-left: 10px">
+									<p class="label-key"><b><a href="http://stackoverflow.com/questions/1669/learning-to-write-a-compiler?lastactivity" class="lastactivity-link" title="2013-04-03 16:49:46Z">8 months ago</a></b></p>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+						
+			<script type="text/javascript">
+                var ados = ados || {};ados.run = ados.run || [];
+                ados.run.push(function() { ados_add_placement(22,8277,"adzerk996926042",17).setZone(45) ; });                    
+            </script>
+              
+    <div id="hireme"> <a href="http://careers.stackoverflow.com/jobs?a=144" class="top" target="_blank"></a> <ul class="jobs"> <li> <a href="http://careers.stackoverflow.com/jobs/44557/senior-backend-engineer-hammer-chisel?a=SlfneIgg" target="_blank" title="Senior Backend Engineer at Hammer &amp; Chisel. Click to learn more."> Senior Backend Engineer<br> <span class="company">Hammer &amp; Chisel</span> <span class="location">Burlingame, CA / remote /…</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/41630/mobile-web-developer-evenspring?a=OLSOJL6o" target="_blank" title="Mobile &amp; Web Developer at Evenspring. Click to learn more."> Mobile &amp; Web Developer<br> <span class="company">Evenspring</span> <span class="location">Richmond, VA / remote</span> </a> </li> <li> <a href="http://careers.stackoverflow.com/jobs/31197/front-end-engineer-arvato-systems-north-america?a=C2ZmfTXi" target="_blank" title="Front End Engineer at arvato Systems North America. Click to learn more."> Front End Engineer<br> <span class="company">arvato Systems North America</span> <span class="location">New York, NY</span> </a> </li> </ul> <img alt="" class="impression" src="./language agnostic - Learning to Write a Compiler - Stack Overflow_files/OLSOJL6o-SlfneIgg-C2ZmfTXi-144" style="display:none"></div>
+			  
+    
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+<div class="spacer">
+	<a href="http://stackoverflow.com/q/3662410?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">28</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/3662410/create-my-own-programming-language?lq=1" class="question-hyperlink">create my own programming language</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/3810119?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">9</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/3810119/how-to-go-about-making-your-own-programming-language?lq=1" class="question-hyperlink">How to go about making your own programming language?</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/1129785?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">3</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/1129785/compiler-design?lq=1" class="question-hyperlink">compiler design</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/3946911?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">3</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/3946911/how-to-write-a-simple-compiler-in-c?lq=1" class="question-hyperlink">How to write a simple compiler in C/++?</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/4091887?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">3</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/4091887/how-would-you-go-about-writing-a-simple-programming-language?lq=1" class="question-hyperlink">How would you go about writing a simple programming language?</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/2923287?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">3</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/2923287/what-is-the-process-of-creating-an-interpreted-language?lq=1" class="question-hyperlink">What is the process of creating an interpreted language?</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/6361462?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">6</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/6361462/where-to-start-if-i-want-to-understand-how-compilers-and-programming-languages-a?lq=1" class="question-hyperlink">Where to start if I want to understand how compilers and programming languages are made</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/6865026?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">4</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/6865026/help-with-compiler-design?lq=1" class="question-hyperlink">Help with Compiler Design</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/1913621?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">21</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/1913621/is-there-a-simple-compiler-for-a-small-language?lq=1" class="question-hyperlink">is there a simple compiler for a small language</a>
+</div><div class="spacer">
+	<a href="http://stackoverflow.com/q/1257376?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">19</div>
+	</a>
+	<a href="http://stackoverflow.com/questions/1257376/interesting-project-to-learn-c?lq=1" class="question-hyperlink">Interesting project to learn C?</a>
+</div>					<div class="spacer more">
+				<a href="http://stackoverflow.com/questions/linked/1669?lq=1">see more linked questions…</a>
+			</div>
+	</div>
+</div>
+
+				<div class="module sidebar-related">
+					<h4 id="h-related">Related</h4>
+					<div class="related" data-tracker="rq=1">
+						<div class="spacer">
+<a href="http://stackoverflow.com/q/41785?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">21
+    </div>
+</a><a href="http://stackoverflow.com/questions/41785/learning-resources-on-parsers-interpreters-and-compilers?rq=1" class="question-hyperlink">Learning Resources on Parsers, Interpreters, and Compilers</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/2193953?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted extra-large">1937
+    </div>
+</a><a href="http://stackoverflow.com/questions/2193953/flash-cs4-refuses-to-let-go?rq=1" class="question-hyperlink">Flash CS4 refuses to let go</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/3294360?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">7
+    </div>
+</a><a href="http://stackoverflow.com/questions/3294360/writing-a-compiler-which-vm?rq=1" class="question-hyperlink">Writing a compiler; which VM?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/3958630?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted large">172
+    </div>
+</a><a href="http://stackoverflow.com/questions/3958630/what-are-important-languages-to-learn-to-understand-different-approaches-and-con?rq=1" class="question-hyperlink">What are important languages to learn to understand different approaches and concepts?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/4177918?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">9
+    </div>
+</a><a href="http://stackoverflow.com/questions/4177918/why-compilers-dont-translate-in-simpler-languages?rq=1" class="question-hyperlink">Why compilers don't translate in simpler languages?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/6216449?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">8
+    </div>
+</a><a href="http://stackoverflow.com/questions/6216449/where-can-i-learn-the-basics-of-writing-a-lexer?rq=1" class="question-hyperlink">Where can I learn the basics of writing a lexer?</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/12099268?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">3
+    </div>
+</a><a href="http://stackoverflow.com/questions/12099268/files-that-describe-cpu-architectures-exhaustively-to-write-retargetable-compile?rq=1" class="question-hyperlink">Files that describe cpu architectures exhaustively to write retargetable compilers</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/12702733?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes answered-accepted default">2
+    </div>
+</a><a href="http://stackoverflow.com/questions/12702733/writing-a-compiler-in-php?rq=1" class="question-hyperlink">Writing a compiler in PHP</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/14306291?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">5
+    </div>
+</a><a href="http://stackoverflow.com/questions/14306291/writing-a-python-compiler-for-practice?rq=1" class="question-hyperlink">Writing a Python compiler for practice</a>
+</div>
+<div class="spacer">
+<a href="http://stackoverflow.com/q/17626148?rq=1" title="Vote score (upvotes - downvotes)">
+    <div class="answer-votes default">3
+    </div>
+</a><a href="http://stackoverflow.com/questions/17626148/how-to-learn-just-in-time-compilation?rq=1" class="question-hyperlink">How to learn Just-in-Time compilation?</a>
+</div>
+
+					</div>
+				</div>
+		</div>
+		<script type="text/javascript">
+StackExchange.ready(function(){$.get('/posts/1669/ivc/052c');});
+</script>
+<noscript>
+    &lt;div&gt;&lt;img src="/posts/1669/ivc/052c" class="dno" alt="" width="0" height="0"&gt;&lt;/div&gt;
+</noscript><div style="display:none" id="prettify-lang"></div></div>
+
+
+        </div>
+    </div>
+    <div id="footer" class="categories">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <div class="top-footer-links">
+                        <a href="http://stackoverflow.com/about">about</a>
+                    <a href="http://stackoverflow.com/help">help</a>
+                        <a href="http://stackoverflow.com/help/badges">badges</a>
+                    <a href="http://blog.stackexchange.com/?blb=1">blog</a>
+                        <a href="http://chat.stackoverflow.com/">chat</a>
+                    <a href="http://data.stackexchange.com/">data</a>
+                    <a href="http://stackexchange.com/legal">legal</a>
+                    <a href="http://stackexchange.com/legal/privacy-policy">privacy policy</a>
+                    <a href="http://stackexchange.com/about/hiring">jobs</a>
+                    <a href="http://engine.adzerk.net/r?e=eyJhdiI6NDE0LCJhdCI6MjAsImNtIjo5NTQsImNoIjoxMTc4LCJjciI6Mjc3NiwiZG0iOjQsImZjIjoyODYyLCJmbCI6Mjc1MSwibnciOjIyLCJydiI6MCwicHIiOjExNSwic3QiOjAsInVyIjoiaHR0cDovL3N0YWNrb3ZlcmZsb3cuY29tL2Fib3V0L2NvbnRhY3QiLCJyZSI6MX0&s=hRods5B22XvRBwWIwtIMekcyNF8">advertising info</a>
+
+                    <a onclick="StackExchange.switchMobile(&quot;on&quot;)">mobile</a>
+                    <b><a href="http://stackoverflow.com/contact">contact us</a></b>
+                        <b><a href="http://meta.stackoverflow.com/">feedback</a></b>
+                    
+                </div>
+                <div id="footer-sites">
+                    <table>
+    <tbody><tr>
+            <th colspan="3">
+                Technology
+            </th>
+            <th>
+                Life / Arts
+            </th>
+            <th>
+                Culture / Recreation
+            </th>
+            <th>
+                Science
+            </th>
+            <th>
+                Other
+            </th>
+    </tr>
+    <tr>
+            <td>
+                <ol>
+                        <li><a href="http://stackoverflow.com/" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                        <li><a href="http://serverfault.com/" title="professional system and network administrators">Server Fault</a></li>
+                        <li><a href="http://superuser.com/" title="computer enthusiasts and power users">Super User</a></li>
+                        <li><a href="http://webapps.stackexchange.com/" title="power users of web applications">Web Applications</a></li>
+                        <li><a href="http://askubuntu.com/" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                        <li><a href="http://webmasters.stackexchange.com/" title="pro webmasters">Webmasters</a></li>
+                        <li><a href="http://gamedev.stackexchange.com/" title="professional and independent game developers">Game Development</a></li>
+                        <li><a href="http://tex.stackexchange.com/" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://programmers.stackexchange.com/" title="professional programmers interested in conceptual questions about software development">Programmers</a></li>
+                        <li><a href="http://unix.stackexchange.com/" title="users of Linux, FreeBSD and other Un*x-like operating systems.">Unix &amp; Linux</a></li>
+                        <li><a href="http://apple.stackexchange.com/" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                        <li><a href="http://wordpress.stackexchange.com/" title="WordPress developers and administrators">WordPress Answers</a></li>
+                        <li><a href="http://gis.stackexchange.com/" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                        <li><a href="http://electronics.stackexchange.com/" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                        <li><a href="http://android.stackexchange.com/" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                        <li><a href="http://security.stackexchange.com/" title="Information security professionals">Information Security</a></li>
+                            </ol></td><td><ol>
+                        <li><a href="http://dba.stackexchange.com/" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                        <li><a href="http://drupal.stackexchange.com/" title="Drupal developers and administrators">Drupal Answers</a></li>
+                        <li><a href="http://sharepoint.stackexchange.com/" title="SharePoint enthusiasts">SharePoint</a></li>
+                        <li><a href="http://ux.stackexchange.com/" title="user experience researchers and experts">User Experience</a></li>
+                        <li><a href="http://mathematica.stackexchange.com/" title="users of Mathematica">Mathematica</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#technology" class="more">
+                                more (14)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://photo.stackexchange.com/" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                        <li><a href="http://scifi.stackexchange.com/" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                        <li><a href="http://cooking.stackexchange.com/" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                        <li><a href="http://diy.stackexchange.com/" title="contractors and serious DIYers">Home Improvement</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#lifearts" class="more">
+                                more (13)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://english.stackexchange.com/" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                        <li><a href="http://skeptics.stackexchange.com/" title="scientific skepticism">Skeptics</a></li>
+                        <li><a href="http://judaism.stackexchange.com/" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                        <li><a href="http://travel.stackexchange.com/" title="road warriors and seasoned travelers">Travel</a></li>
+                        <li><a href="http://christianity.stackexchange.com/" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                        <li><a href="http://gaming.stackexchange.com/" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                        <li><a href="http://bicycles.stackexchange.com/" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                        <li><a href="http://rpg.stackexchange.com/" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#culturerecreation" class="more">
+                                more (21)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://math.stackexchange.com/" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                        <li><a href="http://stats.stackexchange.com/" title="statisticians, data analysts, data miners and data visualization experts">Cross Validated (stats)</a></li>
+                        <li><a href="http://cstheory.stackexchange.com/" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                        <li><a href="http://physics.stackexchange.com/" title="active researchers, academics and students of physics">Physics</a></li>
+                        <li><a href="http://mathoverflow.net/" title="professional mathematicians">MathOverflow</a></li>
+                    
+                        <li>
+                            <a href="http://stackexchange.com/sites#science" class="more">
+                                more (7)
+                            </a>
+                        </li>
+                </ol>
+            </td>
+            <td>
+                <ol>
+                        <li><a href="http://stackapps.com/" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                        <li><a href="http://meta.stackoverflow.com/" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Overflow</a></li>
+                        <li><a href="http://area51.stackexchange.com/" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                        <li><a href="http://careers.stackoverflow.com/">Stack Overflow Careers</a></li>
+                    
+                </ol>
+            </td>
+    </tr>
+</tbody></table>
+                </div>
+            </div>
+
+            <div id="copyright">
+                site design / logo © 2013 stack exchange inc; user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc-wiki</a> 
+ with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="footer-flair">
+                <a href="http://creativecommons.org/licenses/by-sa/3.0/" class="cc-wiki-link"></a>
+            </div>
+            <div id="svnrev">
+                rev 2013.12.12.1221
+            </div>
+            
+        </div>
+    </div>
+    <noscript>
+        &lt;div id="noscript-warning"&gt;Stack Overflow works best with JavaScript enabled&lt;img src="http://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno"&gt;&lt;/div&gt;
+    </noscript>
+<script type="text/javascript">var p = "http", d = "static"; if (document.location.protocol == "https:") { p += "s"; d = "engine"; } var z = document.createElement("script"); z.type = "text/javascript"; z.async = true; z.src = p + "://" + d + ".adzerk.net/ados.js"; var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(z, s);</script>
+<script type="text/javascript">
+    var ados = ados || {};
+    ados.run = ados.run || [];
+    ados.run.push(function () { ados_setKeywords('compiler,language-agnostic');; ados_load(); });         
+</script>
+
+    <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-5620270-1']);
+        _gaq.push(['_setCustomVar', 1, 'tags', '|compiler|language-agnostic|']); 
+_gaq.push(['_trackPageview']);
+    var _qevents = _qevents || [];
+    var _comscore = _comscore || [];
+    (function () {
+        var ssl='https:'==document.location.protocol,
+            s=document.getElementsByTagName('script')[0],
+            ga=document.createElement('script');
+        ga.type='text/javascript';
+        ga.async=true;
+        ga.src=(ssl?'https://ssl':'http://www')+'.google-analytics.com/ga.js';
+        s.parentNode.insertBefore(ga,s);
+        var sc=document.createElement('script');
+        sc.type='text/javascript';
+        sc.async=true;
+        sc.src=(ssl?'https://secure':'http://edge')+'.quantserve.com/quant.js';
+        s.parentNode.insertBefore(sc, s);
+        
+        var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true;
+        s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js";
+        el.parentNode.insertBefore(s, el);
+        
+    })();
+    _comscore.push({ c1: "2", c2: "17440561" });
+    _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+    </script>            
+
+</body></html>

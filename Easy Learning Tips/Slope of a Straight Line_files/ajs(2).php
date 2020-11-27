@@ -1,0 +1,10 @@
+var OX_f0ac7fd7 = '';
+OX_f0ac7fd7 += "<"+"!-- Casale Media: 160x600 (Tower) --><"+"script\n";
+OX_f0ac7fd7 += "type=\"text/javascript\">\n";
+OX_f0ac7fd7 += "var CasaleArgs = new Object();\n";
+OX_f0ac7fd7 += "CasaleArgs.version = 2;\n";
+OX_f0ac7fd7 += "CasaleArgs.adUnits = \"5\";\n";
+OX_f0ac7fd7 += "CasaleArgs.casaleID = 108391;\n";
+OX_f0ac7fd7 += "<"+"/script><"+"script type=\"text/javascript\" src=\"http://js.casalemedia.com/casaleJTag.js\">\n";
+OX_f0ac7fd7 += "<"+"/script><"+"!-- DO NOT MODIFY --><"+"div id=\'beacon_b0eb5389fb\' style=\'position: absolute; left: 0px; top: 0px; visibility: hidden;\'><"+"img src=\'http://www.purplemath.com/mathads/www/delivery/lg.php?bannerid=29&amp;campaignid=22&amp;zoneid=5&amp;loc=1&amp;referer=http%3A%2F%2Fwww.purplemath.com%2Fmodules%2Fslope.htm&amp;cb=b0eb5389fb\' width=\'0\' height=\'0\' alt=\'\' style=\'width: 0px; height: 0px;\' /><"+"/div>\n";
+document.write(OX_f0ac7fd7);

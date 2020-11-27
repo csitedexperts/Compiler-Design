@@ -1,0 +1,24 @@
+
+<!-- saved from url=(0190)https://stackauth.com/auth/global/read?request=wvNT4nFUvnfN32um9jvfN%2FtIRgljz%2FDGu5INM%2B2cQ4frf%2BCNk2MVC%2FbYartX0%2F4dJNv7Mnxv2tLo4%2FAH%2FSojAQ%3D%3D&nonce=KxWqUgAAAAD3lxCqacwY2A%3D%3D -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                  <script type="text/javascript">
+                  var data = {"ReadSession":"https://stackauth.com/auth/global/read-session","Request":"wvNT4nFUvnfN32um9jvfN/tIRgljz/DGu5INM+2cQ4frf+CNk2MVC/bYartX0/4dJNv7Mnxv2tLo4/AH/SojAQ==","Nonce":"KxWqUgAAAAD3lxCqacwY2A==","Referrer":"http://stackoverflow.com/questions/672577/how-can-i-parse-code-to-build-a-compiler-in-java","StorageName":"GlobalLogin"};
+
+                  var toMsg = window.parent;
+
+                  var obj = localStorage.getItem(data.StorageName);
+                  if(obj != null) {
+                  var req = new XMLHttpRequest();
+                  req.open('POST', data.ReadSession+'?request='+encodeURIComponent(data.Request)+'&nonce='+encodeURIComponent(data.Nonce)+'&seriesAndToken='+encodeURIComponent(obj), false);
+                  req.send(null);
+                  
+                    if(req.status == 200){
+                      toMsg.postMessage(req.responseText, data.Referrer);
+                    }else{
+                      toMsg.postMessage('No Session', data.Referrer);
+                    }
+                  }else{
+                    toMsg.postMessage('No Local Storage', data.Referrer);
+                  }
+                  </script>
+                  </head><body></body></html>
